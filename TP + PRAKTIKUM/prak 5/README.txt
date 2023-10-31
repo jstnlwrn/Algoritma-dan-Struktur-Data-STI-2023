@@ -1,0 +1,1 @@
+file mesinkata & mesinkarakter sometimes changed. might get some error
