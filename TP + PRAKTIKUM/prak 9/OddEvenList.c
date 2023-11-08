@@ -7,48 +7,42 @@ void OddEvenList(List L, List *Odd, List *Even){
     //declare temp
     address P = First(L);
     address prec;
-    address Oddtemp = First(*Odd);
-    address Eventemp = First(*Even);
-    //transverse L
-    while (P != Nil){
-        //check if info(P) is odd
-        if (Info(P) % 2 == 1){
-            //check if Odd is empty
-            if (Oddtemp == Nil){
-                //if yes, insert info(P) to Odd
-                InsVFirst(Odd, Info(P));
-            }
-            else{
-                //transverse Odd, find higher value than info(P) or Nil
-                while (Oddtemp != Nil && Info(Oddtemp) < Info(P)){
-                    prec = Oddtemp;
-                    Oddtemp = Next(Oddtemp);
-                }
-                //insert info(P) to Odd
-                InsertAfter(Odd, Alokasi(Info(P)), prec); 
-            }
-            //move to next node
-            P = Next(P);
-        }
-        //if no, insert info(P) to Even
-        else{
-            //check if Even is empty
-            if (Eventemp == Nil){
-                //if yes, insert info(P) to Even
+    address temp;
+    //transverse list
+    while(P != Nil){
+        //check odd or even
+        if(Info(P) % 2 == 0){
+            temp = First(*Even);
+            //check if list empty or first node is higher than current node
+            if(temp == Nil || Info(temp) > Info(P)){
                 InsVFirst(Even, Info(P));
-            }
-            else{
-                //transverse Even, find higher value than info(P) or Nil
-                while (Eventemp != Nil && Info(Eventemp) < Info(P)){
-                    prec = Eventemp;
-                    Eventemp = Next(Eventemp);
+            //else, find value higher than info(P)
+            }else{
+                while(Info(Next(temp)) <= Info(P) || Next(temp) != Nil){
+                    temp = Next(temp);
                 }
-                //insert info(P) to Even
-                InsertAfter(Even, Alokasi(Info(P)), prec);   
+                InsertAfter(Even, Alokasi(Info(P)), prec);
             }
-            //move to next node
-            P = Next(P);
+        }else{
+            temp = First(*Odd);
+            //check if list empty or first node is higher than current node
+            if(temp == Nil || Info(temp) > Info(P)){
+                InsVFirst(Odd, Info(P));
+            //else, find value higher than info(P)
+            }else{
+                while(true){
+                    //if next node is higher than info(P)
+                    if(Info(Next(temp)) > Info(P) || Next(temp) == Nil){
+                        //insert after temp
+                        InsertAfter(Odd, Alokasi(Info(P)), temp);
+                        break;
+                    }
+                    temp = Next(temp);
+                }
+            }
         }
+        //move to next element
+        P = Next(P);
     }
 }
 
