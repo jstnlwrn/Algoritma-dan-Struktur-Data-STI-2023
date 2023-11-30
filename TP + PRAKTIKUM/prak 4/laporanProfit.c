@@ -11,17 +11,23 @@ void PrintInfo(List L){
     printf("\n");
 }
 
-int MaxProfit(List L){
+int tempProfit(List L){
     int i;
+    int temp=0;
     int max=0;
     for (i=FirstIdx(L); i<=LastIdx(L); i++){
-        //check if max + get(L, i) < 0
-        if (max + Get(L, i) < 0){
-            //set max to 0
-            max = 0;
+        //check if temp + get(L, i) < 0
+        if (temp + Get(L, i) < 0){
+            //set temp to 0
+            temp = 0;
         } else {
-            //add max with get(L, i)
-            max += Get(L, i);
+            //add temp with get(L, i)
+            temp += Get(L, i);
+        }
+        //check if temp > max
+        if (temp > max){
+            //set max to temp
+            max = temp;
         }
     }
     return max;
@@ -48,11 +54,8 @@ int main(){
         if(query == 0){
             //get P, X
             scanf("%d %d\n", &P, &X);
-            //check if P is valid
-            if (IsIdxValid(L, P)){
-                //change value with index P to X
-                Set(&L, P, X);
-            }
+            //change value with index P to X
+            Set(&L, P, X);
         } else if (query == 1){
             //check if list not empty
             if (!IsEmpty(L)){
@@ -62,22 +65,18 @@ int main(){
         } else if (query == 2){
             //get P, X
             scanf("%d %d\n", &P, &X);
-            //check if P is valid
-            if (IsIdxValid(L, P)){
-                //add value X to index P
-                InsertAt(&L, X, P);
-            }
+            //add value X to index P
+            InsertAt(&L, X, P);
+            
         } else if (query == 3){
             //get P
             scanf("%d\n", &P);
-            //check if P is valid
-            if (IsIdxValid(L, P)){
-                //delete value with index P
-                DeleteAt(&L, P);
-            }
+            //delete value with index P
+            DeleteAt(&L, P);
+            
         } else if (query == 4){
-            //get max profit
-            printf("%d\n", MaxProfit(L));
+            //get temp profit
+            printf("%d\n", tempProfit(L));
         }
     }
     return 0;
